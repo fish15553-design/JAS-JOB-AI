@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>JAS JOB AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;600&family=Noto+Serif:wght@700&display=swap&subset=cyrillic-ext" rel="stylesheet">
+<style>
+:root{--bg:#F6F8FC;--surface:#fff;--ink:#101828;--muted:#475467;--brand:#1F4FD8;--on-brand:#fff;--accent:#D7F25B;--on-accent:#101828;--line:#DCE3F0;--tint:#E8EEFC;
+--serif:"Noto Serif",Georgia,"Times New Roman",serif;--sans:"Noto Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0C1220;--surface:#141C2E;--ink:#E8EEFA;--muted:#9AA9C6;--brand:#7FA2FF;--on-brand:#0C1220;--line:#25314A;--tint:#17223A;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0C1220;--surface:#141C2E;--ink:#E8EEFA;--muted:#9AA9C6;--brand:#7FA2FF;--on-brand:#0C1220;--line:#25314A;--tint:#17223A;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.65 var(--sans)}
+h1,h2,h3{font-family:var(--serif);line-height:1.2;margin:0 0 .6em}
+h1{font-size:clamp(2.2rem,6vw,3.8rem);letter-spacing:-.01em}
+h2{font-size:clamp(1.5rem,3.4vw,2.1rem)}
+h3{font-size:1.1rem}
+p{margin:0 0 1em;max-width:68ch}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+nav{border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;gap:6px 18px;flex-wrap:wrap;align-items:center;padding-top:12px;padding-bottom:12px}
+nav b{font-family:var(--serif);margin-right:auto}
+nav b i{font-style:normal;background:var(--accent);color:var(--on-accent);padding:0 6px;border-radius:5px}
+nav a{text-decoration:none;color:var(--muted);font-size:.93rem}
+nav a:hover{color:var(--brand)}
+.hero{padding:56px 0 40px;display:grid;gap:36px;grid-template-columns:1.15fr 1fr;align-items:center}
+.slogan{display:inline-block;background:var(--accent);color:var(--on-accent);font-weight:600;padding:6px 14px;border-radius:999px;margin-bottom:18px;font-size:.98rem}
+.lead{font-size:1.2rem;color:var(--muted)}
+.phone{background:var(--surface);border:1px solid var(--line);border-radius:28px;padding:18px;max-width:340px;justify-self:center;width:100%;box-shadow:0 10px 30px rgba(16,24,40,.12)}
+.phone .top{background:var(--brand);color:var(--on-brand);border-radius:16px;padding:16px}
+.phone .top b{font-family:var(--serif);font-size:1.15rem;display:block}
+.phone .top span{font-size:.9rem;opacity:.9}
+.phone .ask{margin:12px 0;background:var(--tint);border-radius:14px;padding:12px 14px;font-size:.94rem}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.9rem;background:var(--bg)}
+.tile small{display:block;color:var(--muted);font-size:.78rem}
+section{padding:44px 0;border-top:1px solid var(--line)}
+.cols{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.box{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px}
+.box h3{margin-bottom:.35em}
+.box p{margin:0;color:var(--muted);font-size:.97rem}
+.num{display:inline-grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--accent);color:var(--on-accent);font:700 .95rem var(--serif);margin-bottom:10px}
+.goal{background:var(--brand);color:var(--on-brand);border-radius:12px;padding:22px 24px;margin-bottom:22px}
+.goal p{margin:0;max-width:none}
+ul.tick{padding-left:1.2em;margin:0}
+ul.tick li{margin-bottom:.5em}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.chip{font:inherit;font-size:.95rem;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--brand);color:var(--on-brand);border-color:var(--brand)}
+.result{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:16px 18px;min-height:6.5em}
+.result ul{margin:.4em 0 0;padding-left:1.2em}
+.ai{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
+.log{max-height:380px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;margin:14px 0}
+.msg{padding:10px 14px;border-radius:14px;max-width:90%;white-space:pre-wrap}
+.msg.me{align-self:flex-end;background:var(--brand);color:var(--on-brand)}
+.msg.bot{align-self:flex-start;background:var(--tint)}
+.row{display:flex;gap:8px;align-items:flex-end}
+.row textarea{flex:1;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);resize:vertical;min-height:52px}
+.send{font:inherit;font-weight:600;padding:12px 20px;border:0;border-radius:10px;background:var(--accent);color:var(--on-accent);cursor:pointer}
+.send:disabled{opacity:.5;cursor:default}
+.hint{color:var(--muted);font-size:.9rem;margin:10px 0 0}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:420px;background:var(--surface)}
+th,td{text-align:left;padding:11px 14px;border:1px solid var(--line);vertical-align:top}
+th{background:var(--tint);font-family:var(--serif);font-size:.98rem}
+.note{background:var(--tint);border-radius:10px;padding:16px 18px;margin-top:20px}
+.note p{margin:0}
+footer{border-top:1px solid var(--line);padding:26px 0;color:var(--muted);font-size:.92rem;text-align:center}
+footer b{display:block;color:var(--ink);font-family:var(--serif);font-size:1.1rem}
+@media (max-width:760px){.hero{grid-template-columns:1fr;padding-top:36px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<nav><div class="wrap"><b>JAS <i>JOB</i> AI</b>
+<a href="#oзekti">Өзектілік</a><a href="#maqsat">Мақсат</a><a href="#ide">Идея</a><a href="#ai">AI кеңесші</a><a href="#funk">Функциялар</a><a href="#auditoriya">Аудитория</a><a href="#zhuzege">Жүзеге асыру</a><a href="#nati">Нәтиже</a><a href="#qorytyndy">Қорытынды</a></div></nav>
+
+<main class="wrap">
+<header class="hero">
+<div>
+<span class="slogan">Әр жасқа – мүмкіндік, әр қабілетке – жұмыс!</span>
+<h1>JAS JOB AI</h1>
+<p class="lead">Жасанды интеллект арқылы жастарды жұмыспен қамту жобасы: жастарға мамандық таңдауға, түйіндеме жазуға, жұмыс табуға және сұхбатқа дайындалуға көмектесетін ақылды мансап платформасы.</p>
+</div>
+<div class="phone" aria-label="Қосымшаның тұжырымдамалық үлгісі">
+<div class="top"><b>JAS JOB AI</b><span>Жастарға арналған ақылды мансап платформасы</span></div>
+<div class="ask"><b>Сәлем!</b> Болашақ мансабыңды бірге бастайық! Өзің туралы айтып бер, біз саған жұмыс табуға көмектесеміз.</div>
+<div class="grid2">
+<div class="tile">Түйіндеме жасау<small>AI арқылы CV</small></div>
+<div class="tile">Жұмыс іздеу<small>Бос жұмыс орындары</small></div>
+<div class="tile">Оқу курстары<small>Жаңа дағдылар</small></div>
+<div class="tile">Сұхбатқа дайындық<small>AI тренажері</small></div>
+</div>
+</div>
+</header>
+
+<section id="oзekti">
+<h2>Жобаның өзектілігі</h2>
+<p>Қазіргі уақытта көптеген жастар оқу орнын аяқтаған соң жұмыс табуда қиындыққа кезігеді. Кейбірінің еңбек тәжірибесі жоқ, кейбірі өз қабілеті мен қызығушылығына сай мамандық таңдай алмайды.</p>
+<div class="cols">
+<div class="box"><h3>Тәжірибе жоқ</h3><p>Жұмыс тәжірибесінің болмауы.</p></div>
+<div class="box"><h3>Тұрақты жұмыс</h3><p>Тұрақты жұмыс табудағы қиындықтар.</p></div>
+<div class="box"><h3>Түйіндеме</h3><p>Түйіндеме жазуды білмеу.</p></div>
+<div class="box"><h3>Сұхбат</h3><p>Сұхбаттан өту тәжірибесінің аздығы.</p></div>
+<div class="box"><h3>Сұранысты мамандықтар</h3><p>Еңбек нарығында сұранысқа ие мамандықтарды білмеу.</p></div>
+<div class="box"><h3>Ауыл жастары</h3><p>Жұмыс мүмкіндіктері туралы ақпаратқа қолжетімділіктің төмендігі.</p></div>
+</div>
+<div class="note"><p>Осы мәселелерді шешу үшін жасанды интеллектке негізделген «JAS JOB AI» жобасы ұсынылады.</p></div>
+</section>
+
+<section id="maqsat">
+<h2>Жобаның мақсаты мен міндеттері</h2>
+<div class="goal"><p><b>Мақсаты:</b> жасанды интеллект көмегімен жастарға мамандық таңдауға, кәсіби дағдыларын дамытуға және өз қабілетіне сәйкес жұмыс табуға көмектесу.</p></div>
+<ul class="tick">
+<li>Жастардың қабілеті мен қызығушылығын анықтау.</li>
+<li>Жеке түйіндеме жасауға көмектесу.</li>
+<li>Бос жұмыс орындарын ұсыну.</li>
+<li>Жастарды тегін онлайн курстарға бағыттау.</li>
+<li>Жұмыс сұхбатына дайындық жүргізу.</li>
+<li>Жұмыс берушілер мен жастар арасындағы байланысты жеңілдету.</li>
+</ul>
+</section>
+
+<section id="ide">
+<h2>Жобаның негізгі идеясы</h2>
+<p>«JAS JOB AI» — жастарға арналған интеллектуалды мобильді қосымша. Ол адамның біліміне, қабілетіне, тәжірибесіне және қызығушылығына қарай жұмыс орындарын ұсынады.</p>
+<p>Төмендегі үлгіде мамандық таңдап, қосымша қандай бағыттарды ұсынуы мүмкін екенін көріңіз (оқу мақсатындағы үлгі).</p>
+<div class="chips" id="chips" role="group" aria-label="Мамандық таңдау"></div>
+<div class="result" id="result" aria-live="polite"><p>Мамандықты таңдаңыз.</p></div>
+</section>
+
+<section id="ai">
+<h2>Жеке AI кеңесші — нақты жасанды интеллект</h2>
+<p>Бұл сайттың ішіндегі жұмыс істейтін жасанды интеллект. Режимді таңдап, өзіңіз туралы жазыңыз.</p>
+<div class="ai">
+<div class="chips" id="modes" role="group" aria-label="AI режимі"></div>
+<div class="log" id="log" aria-live="polite"></div>
+<div class="row"><textarea id="inp" rows="2" aria-label="Хабарлама"></textarea><button class="send" id="send" type="button">Жіберу</button></div>
+<p class="hint" id="aihint"></p>
+</div>
+</section>
+
+<section id="funk">
+<h2>Қосымшаның негізгі функциялары</h2>
+<div class="cols">
+<div class="box"><span class="num">1</span><h3>AI түйіндеме</h3><p>Кәсіби түйіндеме жазуға көмектеседі. Тәжірибесі жоқ жастардың да білімі мен дағдыларын дұрыс көрсетуге мүмкіндік береді.</p></div>
+<div class="box"><span class="num">2</span><h3>Ақылды жұмыс іздеу</h3><p>Адамның қабілеті мен мамандығына сәйкес бос жұмыс орындарын іріктейді.</p></div>
+<div class="box"><span class="num">3</span><h3>AI сұхбат жаттықтырушысы</h3><p>Жастар виртуалды сұхбаттан өтіп, сұрақтарға жауап беруді үйренеді. Жүйе жауаптарына кері байланыс береді.</p></div>
+<div class="box"><span class="num">4</span><h3>Білім мен дағдыны дамыту</h3><p>Сұранысқа ие мамандықтар бойынша курстар мен оқыту бағдарламаларын ұсынады.</p></div>
+<div class="box"><span class="num">5</span><h3>Жеке AI кеңесші</h3><p>Мамандық таңдау, мансап құру және жұмысқа орналасу бойынша кеңес береді.</p></div>
+</div>
+</section>
+
+<section id="auditoriya">
+<h2>Мақсатты аудитория</h2>
+<ul class="tick">
+<li>18–29 жас аралығындағы жастар.</li>
+<li>Жоғары оқу орнын бітірген түлектер.</li>
+<li>Жұмыс тәжірибесі жоқ жастар.</li>
+<li>Жұмыссыз жүрген жастар.</li>
+<li>Ауылдық жерлердегі жастар.</li>
+<li>Әлеуметтік жағдайына байланысты жұмысқа орналасуда қиындық көретін жастар.</li>
+</ul>
+</section>
+
+<section id="zhuzege">
+<h2>Қазақстанда жүзеге асыру</h2>
+<p>Жобаны бірнеше ұйыммен бірлесіп іске асыруға болады.</p>
+<div class="scroll"><table>
+<tr><th>Ұйым</th><th>Жобаға қосатын үлесі</th></tr>
+<tr><td>Еңбек мобильділігі орталықтары</td><td>Жұмыс орындары туралы ақпарат</td></tr>
+<tr><td>Мансап орталықтары</td><td>Жастарды жұмысқа бағыттау</td></tr>
+<tr><td>Жастар ресурстық орталықтары</td><td>Жастармен жұмыс жүргізу</td></tr>
+<tr><td>Жоғары оқу орындары</td><td>Студенттер мен түлектерді тарту</td></tr>
+<tr><td>Жеке компаниялар</td><td>Бос жұмыс орындарын ұсыну</td></tr>
+<tr><td>IT мамандары</td><td>Қосымшаны әзірлеу</td></tr>
+</table></div>
+
+<h3 style="margin-top:32px">Әлеуметтік қызметкердің рөлі</h3>
+<p>Әлеуметтік қызметкер жұмыс іздеуге көмектесіп қана қоймай, жастардың әлеуметтік жағдайын да ескереді.</p>
+<ul class="tick">
+<li>Жұмыссыз жастардың мәселелерін зерттейді.</li>
+<li>Жастардың қабілеті мен қажеттіліктерін анықтайды.</li>
+<li>Оларды жұмысқа орналасу бағдарламаларына бағыттайды.</li>
+<li>Психологиялық қолдау көрсетеді.</li>
+<li>Жұмыс берушілермен байланыс орнатуға көмектеседі.</li>
+<li>Жұмысқа орналасқаннан кейінгі бейімделуін бақылайды.</li>
+</ul>
+
+<h3 style="margin-top:32px">Іске асыру кезеңдері</h3>
+<div class="scroll"><table>
+<tr><th>Кезең</th><th>Жұмыс түрі</th></tr>
+<tr><td>1</td><td>Жастар арасында сауалнама жүргізу</td></tr>
+<tr><td>2</td><td>Қосымшаның дизайны мен құрылымын әзірлеу</td></tr>
+<tr><td>3</td><td>Жасанды интеллект жүйесін енгізу</td></tr>
+<tr><td>4</td><td>Жұмыс берушілермен келісім жасау</td></tr>
+<tr><td>5</td><td>Қосымшаны сынақтан өткізу</td></tr>
+<tr><td>6</td><td>Жобаны іске қосу</td></tr>
+</table></div>
+</section>
+
+<section id="nati">
+<h2>Күтілетін нәтижелер</h2>
+<ul class="tick">
+<li>Жастардың жұмыс іздеу мүмкіндігі артады.</li>
+<li>Тәжірибесі жоқ түлектерге жұмыс табу жеңілдейді.</li>
+<li>Жастардың цифрлық және кәсіби дағдылары дамиды.</li>
+<li>Жұмыссыздық мәселесін азайтуға үлес қосылады.</li>
+<li>Жұмыс берушілер мен жастар арасындағы байланыс жақсарады.</li>
+<li>Жастардың экономикалық және әлеуметтік белсенділігі артады.</li>
+</ul>
+<h3 style="margin-top:32px">Жобаның жаңашылдығы</h3>
+<p>Жобаның ерекшелігі — жұмыс іздеу, түйіндеме дайындау, сұхбатқа дайындық және кәсіби даму мүмкіндіктерінің бір платформаға біріктірілуі.</p>
+<p>Көптеген жастар өздерінің қандай мамандыққа бейім екенін білмейді. Қосымша олардың қабілетін анықтап, жеке даму бағытын ұсынады. Жоба жастарға тек жұмыс тауып беруді емес, болашақ мансабын қалыптастыруды көздейді.</p>
+</section>
+
+<section id="qorytyndy">
+<h2>Қорытынды</h2>
+<p>«JAS JOB AI» — жастар арасындағы жұмыссыздық мәселесін шешуге бағытталған заманауи әлеуметтік жоба. Жасанды интеллект технологиясы жастардың жұмыс іздеу процесін жеңілдетуге, кәсіби дамуына және еңбек нарығына бейімделуіне мүмкіндік береді.</p>
+<p>Әрбір жас өз қабілетін көрсетіп, лайықты жұмыс табуға мүмкіндік алуы керек. Сондықтан бұл жоба қоғамдағы жастардың әлеуетін арттыруға бағытталған маңызды бастама.</p>
+<div class="note"><p>Ескерту: бұл — жобаның ұсынылатын тұжырымдамасы, қосымша әзірге дайын өнім емес.</p></div>
+</section>
+</main>
+
+<footer><div class="wrap"><b>JAS JOB AI</b>«Әр жасқа – мүмкіндік, әр қабілетке – жұмыс!»<br>Жасанды интеллект. Жаңа мүмкіндіктер. Жарқын болашақ.</div></footer>
+
+<script>
+var jobs=[
+{t:"Әлеуметтік жұмыс",s:["Әлеуметтік қызметкер","Әлеуметтік педагог","HR маманы","Көмекші маман"]},
+{t:"Бағдарламалық инженерия",s:["Junior әзірлеуші","Тестілеуші (QA)","Веб-әзірлеуші","IT қолдау маманы"]},
+{t:"Экономика",s:["Қаржы көмекшісі","Есепші көмекшісі","Сатылым менеджері","Деректер талдаушысы"]},
+{t:"Педагогика",s:["Мектеп мұғалімі","Тәрбиеші","Онлайн-тьютор","Оқу орталығының әдіскері"]}
+];
+var chips=document.getElementById("chips"),res=document.getElementById("result");
+jobs.forEach(function(j){var b=document.createElement("button");b.className="chip";b.type="button";b.setAttribute("aria-pressed","false");b.textContent=j.t;
+b.onclick=function(){chips.querySelectorAll(".chip").forEach(function(x){x.setAttribute("aria-pressed","false")});b.setAttribute("aria-pressed","true");
+res.innerHTML="<b>Ұсынылатын жұмыс бағыттары</b><ul>"+j.s.map(function(x){return "<li>"+x+"</li>"}).join("")+"</ul>"};
+chips.appendChild(b)});
+
+var modes=[
+{t:"AI мансап кеңесшісі",ph:"Мамандығыңызды, қызығушылықтарыңызды және тәжірибеңізді жазыңыз…",hi:"Сәлем! Өзің туралы айтып бер: қандай мамандық, нені жақсы көресің, тәжірибең бар ма?",ins:"Сен «JAS JOB AI» қосымшасындағы мансап кеңесшісісің. Жас маманға мамандығы, қабілеті мен қызығушылығына сай 3–4 нақты жұмыс бағытын қысқа түсіндірмемен ұсын, содан кейін келесі қадамдарды айт. Қазақ тілінде, қарапайым әрі достық тонда жауап бер. Нақты бос жұмыс орындарын немесе компания атауларын ойдан шығарма."},
+{t:"AI түйіндеме",ph:"Атыңызды, білімді, дағдыларды, тәжірибені (болса) жазыңыз…",hi:"Түйіндеме жасайық! Атың, оқуың, дағдың және тәжірибең туралы жазып жібер.",ins:"Сен «JAS JOB AI» қосымшасындағы түйіндеме көмекшісісің. Пайдаланушы берген мәліметтерден қазақ тілінде кәсіби түйіндеме жаз: Өзі туралы, Білімі, Дағдылар, Тәжірибе. Тәжірибесі жоқ болса, оқу жобалары мен дағдыларды дұрыс көрсет. Берілмеген мәліметті ойдан шығарма, жетіспеген жерін [толтырыңыз] деп белгіле."},
+{t:"AI сұхбат жаттықтырушысы",ph:"Қай лауазымға сұхбатқа дайындалып жатырсыз?",hi:"Сұхбатқа дайындалайық! Қай лауазымға өтініш бергіңіз келеді?",ins:"Сен «JAS JOB AI» қосымшасындағы сұхбат жаттықтырушысысың. Алғашқы хабарламада лауазымды біліп, бір сұхбат сұрағын қой. Әрі қарай әр жауапқа қысқа кері байланыс бер (не жақсы, нені жақсартуға болады) және келесі сұрақты қой. Қазақ тілінде жауап бер."}
+];
+var mc=document.getElementById("modes"),lg=document.getElementById("log"),inp=document.getElementById("inp"),sb=document.getElementById("send"),ah=document.getElementById("aihint");
+var cur=0,hist=[],busy=false,sample=null;
+function add(cls,txt){var d=document.createElement("div");d.className="msg "+cls;d.textContent=txt;lg.appendChild(d);lg.scrollTop=lg.scrollHeight;return d}
+function setMode(i){cur=i;hist=[];lg.innerHTML="";inp.placeholder=modes[i].ph;add("bot",modes[i].hi);
+mc.querySelectorAll(".chip").forEach(function(x,j){x.setAttribute("aria-pressed",j===i?"true":"false")})}
+modes.forEach(function(m,i){var b=document.createElement("button");b.className="chip";b.type="button";b.textContent=m.t;b.onclick=function(){setMode(i)};mc.appendChild(b)});
+setMode(0);
+try{if(window.claude&&claude.use){claude.use("sample").then(function(s){sample=s;if(!s)ah.textContent="AI қосылмады: бетті claude.ai ішінде ашып, рұқсат беріңіз."}).catch(function(){})}}catch(e){}
+async function go(){
+var v=inp.value.trim();if(!v||busy)return;
+if(!sample){ah.textContent="AI қосылмады: бетті claude.ai ішінде ашып, рұқсат беріңіз.";return}
+busy=true;sb.disabled=true;ah.textContent="";
+add("me",v);hist.push("Пайдаланушы: "+v);inp.value="";
+var out=add("bot","…");
+var prompt=modes[cur].ins+"\n\nСөйлесу:\n"+hist.slice(-10).join("\n")+"\nКөмекші:";
+try{var r=await sample(prompt,{cache:false,onText:function(e){out.textContent=e.text;lg.scrollTop=lg.scrollHeight}});out.textContent=r.text;hist.push("Көмекші: "+r.text)}
+catch(e){out.textContent="AI қазір жауап бере алмады. Кейінірек қайталап көріңіз.";hist.pop()}
+busy=false;sb.disabled=false}
+sb.onclick=go;
+inp.addEventListener("keydown",function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();go()}});
+</script>
+</body>
+</html>
